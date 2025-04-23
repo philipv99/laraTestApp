@@ -4,8 +4,8 @@ Jeg har Lært:
 
 man kan bruge 'php artisan make:*item* <navn på item> i terminalen
             *component  -> laver et blade view til man kan kalde med '<x-*navn></x-*navn>'.
-                            - component's kan også laves direkte i mappem, disse er anonyme component's og har ikke en controller.
-            *controller -> laver en controller vis functioner kan kaldes fra "web.app".
+                            - component's kan også laves direkte i mappen, disse er anonyme component's og har ikke en controller.
+            *controller -> laver en controller vis funktioner kan kaldes fra "web.app".
             *model      -> modelen for hvordan et objekt skal se ud og dens regler.
             -- ude for VMC --
             *request    -> sammel validering i en request tillader den at blive genbrugt.
@@ -17,15 +17,15 @@ man kan bruge 'php artisan make:*item* <navn på item> i terminalen
 
     brug: {{ $slot }} for at tilade udfylding <x-eksempel>tekst kan ses<eksempel>
 
-    <x-eksempel/> kan arve atributer med '@prop(['atribut' => værdi])'
-        <x-eksempel :atribut="*sæt værdi*" />
-            *brug ':' for costom atributer
+    <x-eksempel/> kan arve attributer med '@prop(['atriebut' => værdi])'
+        <x-eksempel :atriebut="*sæt værdi*" />
+            *brug ':' for costom attributer
 
-        ned arv atributter fra originamle element:
+        ned arv attributer fra originalle element:
             <x-eksempel href="link" />
 
             <a {{ $attributes }} >home</a>
-                *{{ $attributes }} => bliver til at atributen på <x-eksempel *href="link"* />
+                *{{ $attributes }} => bliver til at atriebuten på <x-eksempel *href="link"* />
 
 *Request's
     public validerings funktion til messages:
@@ -37,7 +37,7 @@ man kan bruge 'php artisan make:*item* <navn på item> i terminalen
                 'message' => 'required|min:3|max:1000',
             ];
         }
-    kald af validerign:
+    kald af validering:
         public function storeMessage(StoreMessageRequest $request)
         {                               |__________________________> Request klassen lavet til messages
             Message::create($request->validated());________________> Skaber en Massage i DB tabelen med data fra $request ! kun vis validated() går igennem.
@@ -73,15 +73,15 @@ eksempel:
 HTML class kan laves dynamiske ved:
     @class([
         'p-2 border-white ',        # tilføjes altid
-        'border-b-2 '  => $active,  # tilføjet kun vis *stament er true*
-        'border-none ' => !$active  # tilføjet kun vis *stament er false*'
-        'text-red '    => $error,   # flere staments kan tilføjes
+        'border-b-2 '  => $active,  # tilføjet kun vis *statement er true*
+        'border-none ' => !$active  # tilføjet kun vis *statement er false*'
+        'text-red '    => $error,   # flere statements kan tilføjes
     ])
 
 controller's kan kaldes som route gennem web.php
     Route::get('/', [ContactController::class, 'showForm']);
                 |   |                   |       |______> controller functions navn som string.
-                |   |                   |______________> classe.
+                |   |                   |______________> klassen.
                 |   |__________________________________> controller navn i et array.
                 |______________________________________> link / navn på view, kald '/' for index.
 
@@ -91,7 +91,7 @@ controller's kan kaldes som route gennem web.php
             eksempel på brug: @foreach ($messages as $message)
                                         |____> $messages eksistere kun fordi de blev sendt med.
 
-mass injection er blockeret for sikkerhed skyld.
+mass injection er blokkeret for sikkerhed skyld.
 brug:
      protected $fillable = [
         'name',

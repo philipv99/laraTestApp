@@ -6,7 +6,7 @@
 
   <section class="bg-slate-900 py-6 pt-40 h-fit min-h-[100vh]">
     <div class="w-full max-w-6xl mx-auto p-5 text-zinc-50 shadow bg-zinc-700 rounded-xl">
-      <h2 class="text-3xl mb-5">Cantakt me</h2>
+      <h2 class="text-3xl mb-5">Contact me</h2>
 
       <form action="/contact" method="POST" novalidate>
         @csrf
