@@ -1,0 +1,101 @@
+Jeg har Lært:
+
+!start server med 'composer run dev'
+
+man kan bruge 'php artisan make:*item* <navn på item> i terminalen
+            *component  -> laver et blade view til man kan kalde med '<x-*navn></x-*navn>'.
+                            - component's kan også laves direkte i mappem, disse er anonyme component's og har ikke en controller.
+            *controller -> laver en controller vis functioner kan kaldes fra "web.app".
+            *model      -> modelen for hvordan et objekt skal se ud og dens regler.
+            -- ude for VMC --
+            *request    -> sammel validering i en request tillader den at blive genbrugt.
+                            - tilader validereting for kalderen også.
+            *migration  -> lave ændringer i databasen nye tables, felter, data
+
+*component :
+    eksempel.blade.php kan kaldes med <x-eksempel><eksempel>
+
+    brug: {{ $slot }} for at tilade udfylding <x-eksempel>tekst kan ses<eksempel>
+
+    <x-eksempel/> kan arve atributer med '@prop(['atribut' => værdi])'
+        <x-eksempel :atribut="*sæt værdi*" />
+            *brug ':' for costom atributer
+
+        ned arv atributter fra originamle element:
+            <x-eksempel href="link" />
+
+            <a {{ $attributes }} >home</a>
+                *{{ $attributes }} => bliver til at atributen på <x-eksempel *href="link"* />
+
+*Request's
+    public validerings funktion til messages:
+        public function rules(): array
+        {
+            return [
+                'name' => 'required',
+                'mail' => 'required|email',
+                'message' => 'required|min:3|max:1000',
+            ];
+        }
+    kald af validerign:
+        public function storeMessage(StoreMessageRequest $request)
+        {                               |__________________________> Request klassen lavet til messages
+            Message::create($request->validated());________________> Skaber en Massage i DB tabelen med data fra $request ! kun vis validated() går igennem.
+            return redirect('/messages');__________________________> Går til siden messages.blade.php
+        }
+
+form method="/<link til kald>"
+    <link> kan gribbes i web.php med en Route::get|post
+
+    @csrf bruges i former, for at POST kan gå i gennem, sikkerhed
+
+    form gemmer gamle værdier til genkald{{ old('name') }}
+
+    form's sender errors på fejlet post som kan gribbes ved:
+        @if($errors->any())
+            <ul>
+                @foreach ($errors->all() as $er)
+                <li>{{ $er }}</li>
+                @endforeach
+            </ul>
+        @endif
+
+@kald: if|for|foreach|php|etc
+    php kode
+@end<kald>
+
+eksempel:
+    @foreach($items->all() as $item)
+        <div>{{ $item->name }}</div>
+    @endforaech
+
+
+HTML class kan laves dynamiske ved:
+    @class([
+        'p-2 border-white ',        # tilføjes altid
+        'border-b-2 '  => $active,  # tilføjet kun vis *stament er true*
+        'border-none ' => !$active  # tilføjet kun vis *stament er false*'
+        'text-red '    => $error,   # flere staments kan tilføjes
+    ])
+
+controller's kan kaldes som route gennem web.php
+    Route::get('/', [ContactController::class, 'showForm']);
+                |   |                   |       |______> controller functions navn som string.
+                |   |                   |______________> classe.
+                |   |__________________________________> controller navn i et array.
+                |______________________________________> link / navn på view, kald '/' for index.
+
+    data kan sendes med controller kaldet:
+        return view('messages', ['messages' => Message::all()]);
+            *dette er kun brug bart vis siden forventer det.
+            eksempel på brug: @foreach ($messages as $message)
+                                        |____> $messages eksistere kun fordi de blev sendt med.
+
+mass injection er blockeret for sikkerhed skyld.
+brug:
+     protected $fillable = [
+        'name',
+        'mail',
+        'message'
+    ];
+for at tilade mass injektion
