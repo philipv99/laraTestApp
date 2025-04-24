@@ -4,6 +4,7 @@
         <ul class="flex gap-8 text-lg capitalize">
             <x-navbar-link href="/messages" :active="request()->is('messages')">Messages</x-navbar-link>
             <x-navbar-link href="/" :active="request()->is(patterns: '/')">Post Messages</x-navbar-link>
+            <x-navbar-link href="/articles" :active="request()->is('articles')">Articles</x-navbar-link>
         </ul>
     </div>
 </header>
