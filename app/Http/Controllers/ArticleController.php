@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreArticleRequest;
 use App\Models\Article;
+use Error;
+use Exception;
 use Illuminate\Http\Request;
 use SebastianBergmann\Type\NullType;
+
+use function Laravel\Prompts\error;
 
 class ArticleController extends Controller
 {
@@ -37,6 +41,13 @@ class ArticleController extends Controller
     {
         $article = Article::findOrFail($id);
         $article->update($request->only('header', 'author', 'body'));
+        return redirect('articles');
+    }
+
+    public function deleteArticle($id)
+    {
+        $article = Article::findOrFail($id);
+        $article->delete();
         return redirect('articles');
     }
 }
